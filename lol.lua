@@ -8258,19 +8258,17 @@ function WindowArgs:Update(config: WindowUpdate)
     local targetText = config.ExpireDate
     local textLength = #targetText
     
-    -- 创建一个新线程来执行打字效果，避免阻塞主线程
     coroutine.wrap(function()
-        while true do -- 无限循环
+        while true do 
             local currentText = ""
             
-            -- 打字阶段
             for i = 1, textLength do
                 currentText = currentText .. string.sub(targetText, i, i)
                 ExpireText.Text = currentText
-                wait(0.5) 
+                wait(1.5) 
             end
             
-            wait(5) 
+            wait(10) 
         end
     end)()
 end;
