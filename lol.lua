@@ -8254,7 +8254,6 @@ function WindowArgs:Update(config: WindowUpdate)
     Config.Name = config.WindowName or Config.Name;
     WindowArgs.Profile = config.UserProfile or WindowArgs.Profile;
 
-    -- 打字机效果实现
     local targetText = config.ExpireDate
     local textLength = #targetText
     
@@ -8265,7 +8264,7 @@ function WindowArgs:Update(config: WindowUpdate)
             for i = 1, textLength do
                 currentText = currentText .. string.sub(targetText, i, i)
                 ExpireText.Text = currentText
-                wait(1.5) 
+                wait(0.7) 
             end
             
             wait(10) 
