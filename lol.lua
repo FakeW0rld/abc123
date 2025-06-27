@@ -8267,10 +8267,10 @@ function WindowArgs:Update(config: WindowUpdate)
             for i = 1, textLength do
                 currentText = currentText .. string.sub(targetText, i, i)
                 ExpireText.Text = currentText
-                wait(0.1) -- 每个字符之间的延迟时间，可根据需要调整
+                wait(0.5) 
             end
             
-            wait(10) -- 完整文本显示10秒后再重新开始
+            wait(5) 
         end
     end)()
 end;
