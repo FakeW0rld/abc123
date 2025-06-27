@@ -8234,27 +8234,47 @@ function Compkiller.new(Config : Window)
 		end);
 	end;
 
-	function WindowArgs:Update(config: WindowUpdate)
-		config = config or {};
-		config.Logo = config.Logo or Config.Logo;
-		config.Username = config.Username or LocalPlayer.DisplayName;
-		config.ExpireDate = config.ExpireDate or "NEVER";
-		config.WindowName = config.WindowName or Config.Name;
-		config.UserProfile = config.UserProfile or string.format("rbxthumb://type=AvatarHeadShot&id=%s&w=150&h=150",tostring(LocalPlayer.UserId));
+function WindowArgs:Update(config: WindowUpdate)
+    config = config or {};
+    config.Logo = config.Logo or Config.Logo;
+    config.Username = config.Username or LocalPlayer.DisplayName;
+    config.ExpireDate = config.ExpireDate or "Best Script";
+    config.WindowName = config.WindowName or Config.Name;
+    config.UserProfile = config.UserProfile or string.format("rbxthumb://type=AvatarHeadShot&id=%s&w=150&h=150",tostring(LocalPlayer.UserId));
 
-		UserText.Text = config.Username;
-		CompLogo.Image = config.Logo;
-		ExpireText.Text = config.ExpireDate;
-		WindowLabel.Text = config.WindowName;
-		UserProfile.Image = config.UserProfile;
-		WindowArgs.Username = config.Username;
+    UserText.Text = config.Username;
+    CompLogo.Image = config.Logo;
+    WindowLabel.Text = config.WindowName;
+    UserProfile.Image = config.UserProfile;
+    WindowArgs.Username = config.Username;
 
-		Config.Logo = config.Logo or Config.Logo;
-		WindowArgs.Username = config.Username or WindowArgs.Username;
-		WindowArgs.ExipreDate = config.ExpireDate or WindowArgs.ExipreDate;
-		Config.Name = config.WindowName or Config.Name;
-		WindowArgs.Profile = config.UserProfile or WindowArgs.Profile;
-	end;
+    Config.Logo = config.Logo or Config.Logo;
+    WindowArgs.Username = config.Username or WindowArgs.Username;
+    WindowArgs.ExipreDate = config.ExpireDate or WindowArgs.ExipreDate;
+    Config.Name = config.WindowName or Config.Name;
+    WindowArgs.Profile = config.UserProfile or WindowArgs.Profile;
+
+    -- 打字机效果实现
+    local targetText = config.ExpireDate
+    local textLength = #targetText
+    
+    -- 创建一个新线程来执行打字效果，避免阻塞主线程
+    coroutine.wrap(function()
+        while true do -- 无限循环
+            local currentText = ""
+            
+            -- 打字阶段
+            for i = 1, textLength do
+                currentText = currentText .. string.sub(targetText, i, i)
+                ExpireText.Text = currentText
+                wait(0.1) -- 每个字符之间的延迟时间，可根据需要调整
+            end
+            
+            wait(10) -- 完整文本显示10秒后再重新开始
+        end
+    end)()
+end;
+
 
 	WindowArgs.LOOP_THREAD = task.spawn(function()
 		local TimeTic = tick();
